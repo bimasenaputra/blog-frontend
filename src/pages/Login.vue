@@ -26,7 +26,10 @@
 <script setup>
 	import { reactive, ref } from 'vue';
 	import { useStore } from '../store/useStore';
+	import { useRouter } from 'vue-router';
+
 	const store = useStore();
+	const router = useRouter();
 
 	const errors = ref({});
 	const form = reactive({
@@ -35,7 +38,9 @@
 	})
 
 	const login = () => {
-		store.login(form).catch((e) => {
+		store.login(form).then(() => {
+			router.replace({ name: 'admin.posts' })
+		}).catch((e) => {
 			if (e.response.status === 422) {
 				errors.value = e.response.data.errors;
 			}
