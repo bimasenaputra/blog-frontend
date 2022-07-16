@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "lodash": "^4.17.21",
     "pinia": "^2.0.16",
     "pinia-plugin-persistedstate": "^1.6.1",
     "vue": "^3.2.37",

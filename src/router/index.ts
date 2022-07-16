@@ -4,6 +4,7 @@ import Home from '../pages/Home.vue'
 import Post from '../pages/Post.vue'
 import Login from '../pages/Login.vue'
 import Posts from '../pages/admin/Posts.vue'
+import Edit from '../pages/admin/Edit.vue'
 
 const routes = [
 	{
@@ -26,6 +27,23 @@ const routes = [
 		path:'/admin/posts',
 		name: 'admin.posts',
 		component: Posts,
+		beforeEnter: (to, from, next) => {
+			const store = useStore()
+
+			console.log(store.getAuthenticated)
+
+			if (!store.getAuthenticated) {
+				return next({ name: 'admin.login' })
+			}
+
+			return next()
+		}
+	},
+	{
+		path:'/admin/posts/:slug/edit',
+		name: 'admin.posts.edit',
+		component: Edit,
+		props: true,
 		beforeEnter: (to, from, next) => {
 			const store = useStore()
 

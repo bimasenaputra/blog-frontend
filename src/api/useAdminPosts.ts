@@ -14,3 +14,28 @@ export const useAdminPosts = () => {
 		fetchPosts,
 	};
 };
+
+export const useCreatePost = () => {
+	const createPost = async () => {
+		let response = await axios.post('api/admin/posts');
+		return response.data.data;
+	}
+
+	return {
+		createPost
+	};
+}
+
+export const useAdminPost = () => {
+	const post = ref([]);
+
+	const fetchPost = async (slug) => {
+		let response = await axios.get(`api/admin/posts/${slug}/edit`);
+		post.value = response.data.data;
+	};
+
+	return {
+		post,
+		fetchPost,
+	};
+};
