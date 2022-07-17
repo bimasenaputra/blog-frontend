@@ -34,8 +34,14 @@ export const useAdminPost = () => {
 		post.value = response.data.data;
 	};
 
+	const patchPost = async (uuid) => {
+		let response = await axios.patch(`api/admin/posts/${uuid}`, post.value);
+		post.value = response.data.data;
+	};
+
 	return {
 		post,
 		fetchPost,
+		patchPost
 	};
 };

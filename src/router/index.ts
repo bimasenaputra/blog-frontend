@@ -30,8 +30,6 @@ const routes = [
 		beforeEnter: (to, from, next) => {
 			const store = useStore()
 
-			console.log(store.getAuthenticated)
-
 			if (!store.getAuthenticated) {
 				return next({ name: 'admin.login' })
 			}
@@ -46,8 +44,6 @@ const routes = [
 		props: true,
 		beforeEnter: (to, from, next) => {
 			const store = useStore()
-
-			console.log(store.getAuthenticated)
 
 			if (!store.getAuthenticated) {
 				return next({ name: 'admin.login' })
