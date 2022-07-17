@@ -10,7 +10,8 @@
 	import StarterKit from '@tiptap/starter-kit'
 
 	const props = defineProps({
-		modelValue: String
+		modelValue: String,
+		teaserValue: String
 	})
 
 	const emit = defineEmits(['update'])
@@ -26,6 +27,8 @@
 			}
 		},
 		onUpdate: (context) => {
+			const teaser = context.editor.state.doc.content.content.find(c => c.type.name === 'paragraph')
+			emit('update:teaserValue', teaser.textContent)
 			emit('update:modelValue', context.editor.getHTML())
 		}
 	})
