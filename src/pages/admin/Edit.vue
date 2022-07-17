@@ -3,7 +3,7 @@
 		<div class="absolute w-full left-0 top-0 p-6 flex justify-between items-center space-x-6">
 			<div class="flex-grow flex items-center">
 				<span class="mr-1">/</span>
-				<input type="text" class="p-0 border-none focus:ring-0 w-full" v-model="post.slug" />
+				<input type="text" class="p-0 border-none focus:ring-0 w-full" v-model="post.slug" spellcheck="false" v-on:click="$event.target.select()" />
 			</div>
 			<div class="flex items-center space-x-6">
 				<div class="">
@@ -28,21 +28,36 @@
 </template>
 
 <script setup>
-	import { onMounted, watch } from 'vue';
+	import { onMounted, watch, watchEffect } from 'vue';
 	import ResizableTextarea from '../../components/ResizableTextarea.vue';
 	import { useAdminPost } from '../../api/useAdminPosts';
 	import { useRoute } from 'vue-router';
 	import _ from 'lodash';
+	import slugify from 'slugify';
 
 	const router = useRoute();
 	const { post, fetchPost, patchPost } = useAdminPost();
 
+	const updateSlug = () => {
+		const slug = post.value.slug;
+
+		if (slug.charAt(slug.length - 1) === ' ') {
+			return;
+		}
+
+		post.value.slug = slug ? slugify(slug, { strict: true }) : post.value.uuid;
+	};
+
 	const updatePost = async () => {
-		await patchPost(post.uuid);
+		await patchPost(router.params.uuid);
 	};
 	
 	onMounted(async () => {
-		await fetchPost(router.params.slug);
+		await fetchPost(router.params.uuid);
+
+		watchEffect(() => {
+			updateSlug();
+		});
 
 		watch(() => _.cloneDeep(post), _.debounce(() => {
 			updatePost();

@@ -29,8 +29,8 @@ export const useCreatePost = () => {
 export const useAdminPost = () => {
 	const post = ref([]);
 
-	const fetchPost = async (slug) => {
-		let response = await axios.get(`api/admin/posts/${slug}/edit`);
+	const fetchPost = async (uuid) => {
+		let response = await axios.get(`api/admin/posts/${uuid}/edit`);
 		post.value = response.data.data;
 	};
 
