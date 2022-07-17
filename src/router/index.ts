@@ -21,7 +21,16 @@ const routes = [
 	{
 		path:'/admin/login',
 		name: 'admin.login',
-		component: Login
+		component: Login,
+		beforeEnter: (to, from, next) => {
+			const store = useStore()
+
+			if (store.getAuthenticated) {
+				return next({ name: 'admin.posts' })
+			}
+
+			return next()
+		}
 	},
 	{
 		path:'/admin/posts',

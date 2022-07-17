@@ -39,7 +39,7 @@
 
 	const login = () => {
 		store.login(form).then(() => {
-			router.replace({ name: 'admin.posts' })
+			router.push({ name: 'admin.posts' })
 		}).catch((e) => {
 			if (e.response.status === 422) {
 				errors.value = e.response.data.errors;
