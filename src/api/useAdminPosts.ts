@@ -26,6 +26,16 @@ export const useCreatePost = () => {
 	};
 }
 
+export const useDeletePost = () => {
+	const deletePost = async (uuid) => {
+		await axios.delete(`api/admin/posts/${uuid}`);
+	}
+
+	return {
+		deletePost
+	};
+}
+
 export const useAdminPost = () => {
 	const post = ref([]);
 
