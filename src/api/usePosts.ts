@@ -18,7 +18,7 @@ export const usePosts = () => {
 export const usePost = () => {
 	const post = ref([]);
 
-	const fetchPost = async (slug) => {
+	const fetchPost = async (slug: string) => {
 		let response = await axios.get(`api/posts/${slug}`);
 		post.value = response.data.data;
 	};

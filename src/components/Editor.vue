@@ -14,7 +14,7 @@
 		teaserValue: String
 	})
 
-	const emit = defineEmits(['update'])
+	const emit = defineEmits(['update:modelValue', 'update:teaserValue'])
 
 	const editor = useEditor({
 		content: props.modelValue,
@@ -28,8 +28,8 @@
 		},
 		onUpdate: (context) => {
 			const teaser = context.editor.state.doc.content.content.find(c => c.type.name === 'paragraph')
-			emit('update:teaserValue', teaser.textContent)
 			emit('update:modelValue', context.editor.getHTML())
+			emit('update:teaserValue', teaser.content.content[0].text)
 		}
 	})
 
@@ -37,6 +37,6 @@
 		if (editor.value.getHTML() === value) {
 			return
 		}
-		editor.value.commands.setContent(props.modelValue)
+		editor.value.commands.setContent(props.modelValue, false)
 	})
 </script>

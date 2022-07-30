@@ -27,7 +27,7 @@ export const useCreatePost = () => {
 }
 
 export const useDeletePost = () => {
-	const deletePost = async (uuid) => {
+	const deletePost = async (uuid: string) => {
 		await axios.delete(`api/admin/posts/${uuid}`);
 	}
 
@@ -39,14 +39,13 @@ export const useDeletePost = () => {
 export const useAdminPost = () => {
 	const post = ref([]);
 
-	const fetchPost = async (uuid) => {
+	const fetchPost = async (uuid: string) => {
 		let response = await axios.get(`api/admin/posts/${uuid}/edit`);
 		post.value = response.data.data;
 	};
 
-	const patchPost = async (uuid) => {
+	const patchPost = async (uuid: string) => {
 		let response = await axios.patch(`api/admin/posts/${uuid}`, post.value);
-		post.value = response.data.data;
 	};
 
 	return {

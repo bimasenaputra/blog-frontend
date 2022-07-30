@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, RouteLocationNormalized } from 'vue-router'
 import { useStore } from '../store/useStore'
 import Home from '../pages/Home.vue'
 import Post from '../pages/Post.vue'
@@ -22,7 +22,7 @@ const routes = [
 		path:'/admin/login',
 		name: 'admin.login',
 		component: Login,
-		beforeEnter: (to, from, next) => {
+		beforeEnter: (to: RouteLocationNormalized, from: RouteLocationNormalized, next: (props?: object) => void) => {
 			const store = useStore()
 
 			if (store.getAuthenticated) {
@@ -36,7 +36,7 @@ const routes = [
 		path:'/admin/posts',
 		name: 'admin.posts',
 		component: Posts,
-		beforeEnter: (to, from, next) => {
+		beforeEnter: (to: RouteLocationNormalized, from: RouteLocationNormalized, next: (props?: object) => void) => {
 			const store = useStore()
 
 			if (!store.getAuthenticated) {
@@ -51,7 +51,7 @@ const routes = [
 		name: 'admin.posts.edit',
 		component: Edit,
 		props: true,
-		beforeEnter: (to, from, next) => {
+		beforeEnter: (to: RouteLocationNormalized, from: RouteLocationNormalized, next: (props?: object) => void) => {
 			const store = useStore()
 
 			if (!store.getAuthenticated) {
