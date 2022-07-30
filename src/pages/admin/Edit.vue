@@ -7,7 +7,7 @@
 			</div>
 			<div class="flex items-center space-x-6">
 				<div class="">
-					<span class="text-sm text-gray-500"> Autosaved </span>
+					<span class="text-sm text-gray-500"> {{ saving ? 'Saving...' : 'Autosaved' }} </span>
 				</div>
 				<button v-on:click="post.published = !post.published" class="text-sm font-medium" v-bind:class="{'text-pink-500' : post.published}">
 					{{ post.published ? 'Unpublish' : 'Publish' }}
@@ -23,14 +23,13 @@
 					<textarea :ref="el" v-model="post.title" v-on:input="resize" class="w-full overflow-visible text-center text-4xl lg:text-6xl leading-10 font-extrabold tracking-tight text-gray-900 border-none focus:ring-0 resize-none p-0" rows="1"></textarea>
 				</template>
 			</ResizableTextarea>
-			<p>{{ post.body }}</p>
 			<Editor v-model:modelValue="post.body" v-model:teaserValue="post.teaser" class="mt-16" />
 		</div>
 	</div>
 </template>
 
 <script setup>
-	import { onMounted, watch, watchEffect } from 'vue';
+	import { ref, onMounted, watch, watchEffect } from 'vue';
 	import ResizableTextarea from '../../components/ResizableTextarea.vue';
 	import Editor from '../../components/Editor.vue';
 	import { useAdminPost } from '../../api/useAdminPosts';
@@ -38,6 +37,7 @@
 	import _ from 'lodash';
 	import slugify from 'slugify';
 
+	const saving = ref(false);
 	const router = useRoute();
 	const { post, fetchPost, patchPost } = useAdminPost();
 
@@ -52,7 +52,9 @@
 	};
 
 	const updatePost = async () => {
+		saving.value = true;
 		await patchPost(router.params.uuid);
+		saving.value = false;
 	};
 	
 	onMounted(async () => {
