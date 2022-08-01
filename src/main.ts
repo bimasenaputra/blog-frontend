@@ -7,7 +7,7 @@ import './assets/app.css'
 import App from './App.vue'
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:8000'
+axios.defaults.baseURL = 'https://fontstream-api.herokuapp.com'
 axios.defaults.withCredentials = true
 
 const pinia = createPinia()
